@@ -1,30 +1,26 @@
 package com.demisgomes.givemeconsolepricehexagonal.adapters.web
 
-import com.demisgomes.givemeconsolepricehexagonal.application.port.`in`.CalculateConsolePriceUseCase
-import com.demisgomes.givemeconsolepricehexagonal.application.port.`in`.LoadConsolePriceUseCase
-import com.demisgomes.givemeconsolepricehexagonal.application.port.`in`.RegisterConsolePriceUseCase
-import com.demisgomes.givemeconsolepricehexagonal.application.model.ConsolePriceCalculateRequest
-import com.demisgomes.givemeconsolepricehexagonal.application.model.ConsolePriceRegisterRequest
-import com.demisgomes.givemeconsolepricehexagonal.domain.models.ConsolePrice
-import com.demisgomes.givemeconsolepricehexagonal.application.usecase.exception.ConsolePriceNotFoundException
+import com.demisgomes.givemeconsolepricehexagonal.core.domain.exception.ConsolePriceNotFoundException
+import com.demisgomes.givemeconsolepricehexagonal.core.domain.models.ConsolePrice
+import com.demisgomes.givemeconsolepricehexagonal.core.domain.models.ConsolePriceCalculateRequest
+import com.demisgomes.givemeconsolepricehexagonal.core.domain.models.ConsolePriceRegisterRequest
+import com.demisgomes.givemeconsolepricehexagonal.core.port.`in`.CalculateConsolePriceInputPort
+import com.demisgomes.givemeconsolepricehexagonal.core.port.`in`.LoadConsolePriceInputPort
+import com.demisgomes.givemeconsolepricehexagonal.core.port.`in`.RegisterConsolePriceInputPort
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.*
 
 @RestController
 class ConsolePriceController(
-        private val registerConsolePriceUseCase: RegisterConsolePriceUseCase,
-        private val calculateConsolePriceUseCase: CalculateConsolePriceUseCase,
-        private val loadConsolePriceUseCase: LoadConsolePriceUseCase) {
+        private val registerConsolePriceInputPort: RegisterConsolePriceInputPort,
+        private val calculateConsolePriceInputPort: CalculateConsolePriceInputPort,
+        private val loadConsolePriceInputPort: LoadConsolePriceInputPort) {
 
     @PostMapping("/consoles")
     fun registerConsolePrice(@RequestBody consolePriceRegisterRequest: ConsolePriceRegisterRequest): ResponseEntity<ConsolePrice> {
-        val consolePrice = registerConsolePriceUseCase.register(consolePriceRegisterRequest)
+        val consolePrice = registerConsolePriceInputPort.register(consolePriceRegisterRequest)
         val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -35,14 +31,14 @@ class ConsolePriceController(
 
     @GetMapping("/calculate")
     fun calculatePricefromBRL(@RequestBody consolePriceCalculateRequest: ConsolePriceCalculateRequest): ResponseEntity<ConsolePrice> {
-        val consolePrice = calculateConsolePriceUseCase.calculate(consolePriceCalculateRequest)
+        val consolePrice = calculateConsolePriceInputPort.calculate(consolePriceCalculateRequest)
         return ResponseEntity.ok(consolePrice)
     }
 
     @GetMapping("/consoles/{id}")
     fun getConsolePriceById(@PathVariable id:Int): ResponseEntity<ConsolePrice> {
         return try {
-            val consolePrice = loadConsolePriceUseCase.getById(id)
+            val consolePrice = loadConsolePriceInputPort.getById(id)
             ResponseEntity.ok(consolePrice)
         }catch (ex: ConsolePriceNotFoundException){
             ResponseEntity.of(Optional.empty())

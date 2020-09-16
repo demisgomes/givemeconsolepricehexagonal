@@ -1,7 +1,7 @@
 package com.demisgomes.givemeconsolepricehexagonal.adapters.repository.mapper
 
 import com.demisgomes.givemeconsolepricehexagonal.adapters.repository.model.ConsolePriceJpa
-import com.demisgomes.givemeconsolepricehexagonal.domain.models.ConsolePrice
+import com.demisgomes.givemeconsolepricehexagonal.core.domain.models.ConsolePrice
 import org.springframework.stereotype.Component
 
 @Component

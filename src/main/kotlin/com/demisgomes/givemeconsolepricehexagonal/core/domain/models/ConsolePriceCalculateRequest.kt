@@ -1,4 +1,4 @@
-package com.demisgomes.givemeconsolepricehexagonal.application.model
+package com.demisgomes.givemeconsolepricehexagonal.core.domain.models
 
 class ConsolePriceCalculateRequest (
         val consoleName: String,

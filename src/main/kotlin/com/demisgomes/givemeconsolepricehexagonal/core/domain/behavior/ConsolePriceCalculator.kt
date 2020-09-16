@@ -1,10 +1,10 @@
-package com.demisgomes.givemeconsolepricehexagonal.domain.behavior
+package com.demisgomes.givemeconsolepricehexagonal.core.domain.behavior
 
-import com.demisgomes.givemeconsolepricehexagonal.domain.models.ConsolePrice
+import com.demisgomes.givemeconsolepricehexagonal.core.domain.models.ConsolePrice
 
-open class ConsolePriceCalculator{
+class ConsolePriceCalculator{
     fun calculateFromProfit(consoleName: String, priceInUSD: Double, profitPercentage: Double,
-                      exchangeRate: Double, taxPercentage: Double): ConsolePrice {
+                            exchangeRate: Double, taxPercentage: Double): ConsolePrice {
 
         val priceInBRLBeforeTax = priceInUSD * exchangeRate
         val taxAmount = priceInBRLBeforeTax * taxPercentage
@@ -25,7 +25,7 @@ open class ConsolePriceCalculator{
     }
 
     fun calculateFromPriceInBRL(consoleName: String, priceInUSD: Double, priceInBRL: Double,
-                            exchangeRate: Double, taxPercentage: Double): ConsolePrice {
+                                exchangeRate: Double, taxPercentage: Double): ConsolePrice {
 
         val priceInBRLBeforeTax = priceInUSD * exchangeRate
         val taxAmount = priceInBRLBeforeTax * taxPercentage

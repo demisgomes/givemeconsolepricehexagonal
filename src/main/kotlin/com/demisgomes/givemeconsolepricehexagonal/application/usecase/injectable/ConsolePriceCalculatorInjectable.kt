@@ -1,7 +1,0 @@
-package com.demisgomes.givemeconsolepricehexagonal.application.usecase.injectable
-
-import com.demisgomes.givemeconsolepricehexagonal.domain.behavior.ConsolePriceCalculator
-import org.springframework.stereotype.Component
-
-@Component
-class ConsolePriceCalculatorInjectable : ConsolePriceCalculator()

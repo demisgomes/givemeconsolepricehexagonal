@@ -1,4 +1,4 @@
-package com.demisgomes.givemeconsolepricehexagonal.domain.models
+package com.demisgomes.givemeconsolepricehexagonal.core.domain.models
 
 data class ConsolePrice(
         val id:Int? = null,
